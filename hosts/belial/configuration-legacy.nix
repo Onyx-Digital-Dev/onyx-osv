@@ -120,21 +120,6 @@
   programs.steam.enable = true;
   programs.virt-manager.enable = true;
 
-  # --- Fonts ------------------------------------------------------------------
-  fonts = {
-    enableDefaultPackages = true;
-    packages = with pkgs; [
-      inter
-      noto-fonts
-      noto-fonts-color-emoji
-      noto-fonts-cjk-sans
-      jetbrains-mono
-      dejavu_fonts
-      font-awesome
-      material-icons
-      material-design-icons
-    ];
-  };
 
   # --- System packages --------------------------------------------------------
   environment.systemPackages = with pkgs; [

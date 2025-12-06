@@ -9,8 +9,11 @@
     ./configuration-legacy.nix
 
     # ---- OSV core + profile (we'll hook these up later) ----
-    # ../../base/core.nix
-    # ../../profiles/workstation.nix
+     ../../base/core.nix
+     ../../profiles/workstation.nix
+
+     ../../modules/fonts.nix
+
 
     # ---- GPU selection (for ISO users to uncomment ONE) ----
     # ../../modules/gpu/amd.nix
