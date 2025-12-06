@@ -159,7 +159,6 @@
     spotify
     discord
     obs-studio
-    strawberry
     gimp
     krita
     claude-code
@@ -236,17 +235,7 @@
     monero-gui
     xmrig
 
-    # MPD clients
-    mpc
-    ncmpcpp
   ];
-
-  # --- MPD (music daemon) -----------------------------------------------------
-  services.mpd = {
-    enable = true;
-    musicDirectory = "/home/oskodiak/media/Audio";
-    network.listenAddress = "127.0.0.1";
-  };
 
   # --- Nix settings / flakes --------------------------------------------------
   nixpkgs.config.allowUnfree = true;
