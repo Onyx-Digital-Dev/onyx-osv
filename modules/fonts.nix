@@ -10,48 +10,48 @@
 { config, pkgs, lib, ... }:
 
 {
-  # ─────────────────────────────────────────
-  #  Font packages
-  # ─────────────────────────────────────────
-  #
-  # Notes:
-  #   - nerdfonts is restricted to a small set of families to
-  #     avoid pulling the entire collection.
-  #
-
   fonts = {
     enableDefaultPackages = true;
 
-    packages = with pkgs; [
-      # UI / text
-      inter
-      noto-fonts
-      noto-fonts-cjk-sans
-      dejavu_fonts
+    # ───────────────────────────────────────
+    #  Font packages
+    # ───────────────────────────────────────
+    #
+    # Notes:
+    #   - Nerd Fonts are included only if available in the
+    #     current nixpkgs (pkgs ? nerdfonts).
+    #
 
-      # Monospace / development
-      jetbrains-mono
-      fira-code
+    packages =
+      let
+        nerdFonts =
+          lib.optional (pkgs ? nerdfonts)
+            (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" ]; });
+      in
+      (with pkgs; [
+        # UI / text
+        inter
+        noto-fonts
+        noto-fonts-cjk-sans
+        dejavu_fonts
 
-      # Nerd Fonts (for icons in terminals, bars, prompts)
-      (nerdfonts.override { fonts = [ "JetBrainsMono" "FiraCode" ]; })
+        # Monospace / development
+        jetbrains-mono
+        fira-code
 
-      # Emoji / symbol coverage
-      noto-fonts-color-emoji
-      twemoji-color-font
+        # Emoji / symbol coverage
+        noto-fonts-color-emoji
+        twemoji-color-font
 
-      # Icon fonts for applets, quickshell, etc.
-      font-awesome
-      material-icons
-      material-design-icons
-    ];
+        # Icon fonts for applets, quickshell, etc.
+        font-awesome
+        material-icons
+        material-design-icons
+      ]) ++ nerdFonts;
 
     # ───────────────────────────────────────
     #  Fontconfig defaults
     # ───────────────────────────────────────
-    #
-    # Sensible defaults for UI and terminal font families.
-    #
 
     fontconfig.defaultFonts = lib.mkDefault {
       sansSerif = [
