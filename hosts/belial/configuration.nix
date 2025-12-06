@@ -13,7 +13,7 @@
      ../../profiles/workstation.nix
 
      ../../modules/fonts.nix
-
+     ../../modules/mpd.nix
 
     # ---- GPU selection (for ISO users to uncomment ONE) ----
     # ../../modules/gpu/amd.nix
