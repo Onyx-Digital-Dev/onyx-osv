@@ -1,22 +1,25 @@
 # ==========================================
-#  GPU PROFILE - NVIDIA
+#  GPU MODULE — NVIDIA
 # ==========================================
-# New users:
-#   - Don't edit this file directly.
-#   - In users/<name>.nix, choose ONE GPU profile to import.
 #
-# Advanced:
-#   - Tune hardware.nvidia options or packages here if needed.
+# This module provides the standard configuration for systems
+# using NVIDIA discrete GPUs. Import this module from a host
+# configuration to enable NVIDIA support.
+#
+# Notes:
+#   - Only one GPU module should be active per system.
+#   - PRIME / hybrid systems should use `nvidia-prime.nix`.
+#
 
 { config, pkgs, lib, ... }:
 
 {
   # ─────────────────────────────────────────
-  #  X11 / DRM driver selection
+  #  Driver selection (X11 / DRM)
   # ─────────────────────────────────────────
   #
-  # Even on Wayland, this influences which kernel DRM driver
-  # is used under the hood.
+  # Even on Wayland systems, this determines the underlying
+  # kernel DRM driver.
 
   services.xserver.videoDrivers = [ "nvidia" ];
 
@@ -35,28 +38,23 @@
 
   hardware.nvidia = {
     modesetting.enable = true;
+
+    # Power management features are available but disabled by default.
     powerManagement.enable = false;
     powerManagement.finegrained = false;
 
-    # New users:
-    #   - Keep the proprietary driver (open = false) unless
-    #     you know you want the open module.
+    # The proprietary module is the default and recommended.
     open = false;
 
     nvidiaSettings = true;
 
-    # Advanced:
-    #   - You can switch to beta or other packages if needed.
+    # Driver package selection.
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
   # ─────────────────────────────────────────
   #  Kernel modules and parameters
   # ─────────────────────────────────────────
-  #
-  # New users:
-  #   - These are the usual NVIDIA kernel modules + DRM modeset.
-  #   - You shouldn't need to change this.
 
   boot.kernelModules = [
     "nvidia"
@@ -70,7 +68,7 @@
   ];
 
   # ─────────────────────────────────────────
-  #  Tools
+  #  Utilities
   # ─────────────────────────────────────────
 
   environment.systemPackages = with pkgs; [
