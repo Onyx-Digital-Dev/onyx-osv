@@ -25,7 +25,6 @@
         # Use QEMU/KVM backend; default package is sufficient for most cases.
         # package = pkgs.qemu_kvm;  # optional override if needed
         swtpm.enable = true;
-        ovmf.enable = true;
       };
 
       onBoot = "start";
