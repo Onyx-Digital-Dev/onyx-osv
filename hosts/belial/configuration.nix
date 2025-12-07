@@ -15,7 +15,9 @@
      ../../modules/fonts.nix
      ../../modules/mpd.nix
      ../../modules/virtualisation.nix
-     
+     ../../modules/ollama.nix
+
+          
     # ---- GPU selection (for ISO users to uncomment ONE) ----
     # ../../modules/gpu/amd.nix
     # ../../modules/gpu/intel.nix
