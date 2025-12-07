@@ -1,48 +1,48 @@
 # ==========================================
-#  OSV BASE MODULE — CORE
+#  OSV BASE MODULE — NIX SETTINGS
 # ==========================================
 #
-# Core system defaults for Onyx OSV. This module is intended
-# to be imported by all hosts. Values are provided via
-# lib.mkDefault where appropriate so host-specific configs
-# can override them without conflict.
+# Central Nix and nixpkgs configuration for Onyx OSV. Controls
+# flake support, store optimization, GC policy, and unfree
+# packages.
 #
 
 { config, pkgs, lib, ... }:
 
 {
   # ─────────────────────────────────────────
-  #  Locale and time
+  #  Nixpkgs configuration
   # ─────────────────────────────────────────
 
-  i18n.defaultLocale = lib.mkDefault "en_US.UTF-8";
-
-  time.timeZone = lib.mkDefault "America/Los_Angeles";
+  nixpkgs.config.allowUnfree = true;
 
   # ─────────────────────────────────────────
-  #  Console configuration
+  #  Nix daemon / client settings
   # ─────────────────────────────────────────
 
-  console = {
-    font = lib.mkDefault "Lat2-Terminus16";
-    useXkbConfig = lib.mkDefault true;
+  nix.settings = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+
+    max-jobs = "auto";
+    cores = 0;
+
+    trusted-public-keys = [
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+    ];
+
+    auto-optimise-store = true;
   };
 
   # ─────────────────────────────────────────
-  #  Base utilities
+  #  Garbage collection
   # ─────────────────────────────────────────
-  #
-  # These are fundamental command-line tools that should be
-  # available on all OSV systems.
 
-  environment.systemPackages = with pkgs; [
-    git
-    vim
-    helix
-    htop
-    curl
-    wget
-    pciutils
-    usbutils
-  ];
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
+  };
 }

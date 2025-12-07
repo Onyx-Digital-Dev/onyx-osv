@@ -10,6 +10,7 @@
 
     # ---- OSV core + profile (we'll hook these up later) ----
      ../../base/core.nix
+     ../../base/nix.nix
      ../../profiles/workstation.nix
 
      ../../modules/fonts.nix
