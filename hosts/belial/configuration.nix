@@ -20,7 +20,9 @@
      ../../modules/audio-pipewire.nix
      ../../modules/networking.nix
      ../../modules/security.nix
-          
+
+     ../../modules/desktop/niri.nix
+               
     # ---- GPU selection (for ISO users to uncomment ONE) ----
     # ../../modules/gpu/amd.nix
     # ../../modules/gpu/intel.nix
