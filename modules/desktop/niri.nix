@@ -32,7 +32,7 @@
 
   programs.waybar.enable = true;
 
-  services.mako.enable = true;
+  programs.mako.enable = true;
 
   services.swayidle = {
     enable = true;
