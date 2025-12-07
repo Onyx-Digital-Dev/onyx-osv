@@ -54,16 +54,6 @@
   # --- Input ------------------------------------------------------------------
   services.libinput.enable = true;
 
-  # --- Audio (PipeWire) -------------------------------------------------------
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-
   # --- User -------------------------------------------------------------------
   users.users.oskodiak = {
     isNormalUser = true;
