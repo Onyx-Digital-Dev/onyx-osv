@@ -76,11 +76,4 @@
     "nvidia-drm.modeset=1"
   ];
 
-  # ─────────────────────────────────────────
-  #  Utilities
-  # ─────────────────────────────────────────
-
-  environment.systemPackages = with pkgs; [
-    nvidia-settings
-  ];
 }
