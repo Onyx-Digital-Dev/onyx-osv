@@ -72,7 +72,6 @@
   # ─────────────────────────────────────────
 
   environment.systemPackages = with pkgs; [
-    nvidia-smi
     nvidia-settings
   ];
 }
