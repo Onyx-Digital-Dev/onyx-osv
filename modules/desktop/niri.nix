@@ -83,7 +83,7 @@
   # ─────────────────────────────────────────
 
   environment.systemPackages = with pkgs; [
-    # Terminal / launcher / lock / wallpaper / clipboard / screenshots
+    # Terminal / launcher / lock / wallpaper / clipboard / screenshots / notifications
     alacritty
     fuzzel
     swaylock
@@ -91,7 +91,8 @@
     wl-clipboard
     grim
     slurp
-
+    mako
+    
     # XWayland helper strongly recommended by upstream Niri docs
     xwayland-satellite
 
