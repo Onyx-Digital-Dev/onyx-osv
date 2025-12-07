@@ -35,6 +35,20 @@
   };
 
   # ─────────────────────────────────────────
+  #  IOMMU kernel parameters
+  # ─────────────────────────────────────────
+  #
+  # Enable IOMMU and passthrough-friendly behavior by default
+  # on systems that use the OSV virtualisation stack.
+  #
+
+  boot.kernelParams = [
+    "intel_iommu=on"
+    "iommu=pt"
+  ];
+
+
+  # ─────────────────────────────────────────
   #  Management tools
   # ─────────────────────────────────────────
 
