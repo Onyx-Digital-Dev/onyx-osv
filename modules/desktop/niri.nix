@@ -32,9 +32,7 @@
 
   programs.waybar.enable = true;
 
-  programs.mako.enable = true;
-
-  services.swayidle = {
+    services.swayidle = {
     enable = true;
     # Safe defaults; tweak per-host if you want suspend, etc.
     timeouts = [
