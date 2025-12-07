@@ -6,82 +6,61 @@
 #   - It assumes a display manager (e.g. SDDM) will start Niri.
 #
 # Advanced:
-#   - Layer Home Manager on top for niri/config.kdl and keybinds.
+#   - Layer Home Manager on top for Niri config.kdl, Mako, swayidle, etc.
 
 { config, pkgs, lib, ... }:
 
 {
   # ─────────────────────────────────────────
-  #  Core compositor
+  #  Core compositor + XWayland
   # ─────────────────────────────────────────
 
   programs.niri.enable = true;
   programs.xwayland.enable = true;
 
   # ─────────────────────────────────────────
-  #  Bar + notifications + idle + lock
+  #  Bar (Waybar)
   # ─────────────────────────────────────────
   #
-  # Matches NixOS wiki “Additional Setup” and Niri wiki “Important Software”.
-  # - alacritty   : default terminal in upstream config
-  # - fuzzel      : app launcher
-  # - swaylock    : lockscreen
-  # - waybar      : top bar
-  # - mako        : notification daemon
-  # - swayidle    : idle management
+  # NixOS has a native waybar module.
+  # HM can refine style/settings later if we want.
 
   programs.waybar.enable = true;
 
-    services.swayidle = {
-    enable = true;
-    # Safe defaults; tweak per-host if you want suspend, etc.
-    timeouts = [
-      {
-        timeout = 600; # 10 minutes
-        command = "${pkgs.swaylock}/bin/swaylock -fF";
-      }
-      # {
-      #   timeout = 900;
-      #   command = "${pkgs.systemd}/bin/systemctl suspend";
-      # }
-    ];
-  };
+  # ─────────────────────────────────────────
+  #  PAM integration for swaylock
+  # ─────────────────────────────────────────
+  #
+  # Required so swaylock can actually unlock the session.
 
-  # Allow swaylock to use PAM
   security.pam.services.swaylock = { };
 
   # ─────────────────────────────────────────
   #  Portals, polkit, secret service
   # ─────────────────────────────────────────
   #
-  # Upstream recommends:
-  #   - xdg-desktop-portal-gtk  (fallback / generic)
-  #   - xdg-desktop-portal-gnome (screencast)
-  #   - gnome-keyring (Secret Service)
-  #
-  # NixOS’ xdg.portal module handles the systemd wiring.
+  # This is the big “make Wayland apps behave like a modern desktop” bit.
 
   xdg.portal = {
     enable = true;
-
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
       xdg-desktop-portal-gnome
     ];
-
-    # We can leave .config.common.default alone and let NixOS pick.
-    # If we ever want to explicitly prefer GNOME or GTK we can set it here.
   };
 
   security.polkit.enable = true;
   services.gnome.gnome-keyring.enable = true;
 
   # ─────────────────────────────────────────
-  #  Wayland helpers & Niri-recommended tools
+  #  Packages Niri expects around it
   # ─────────────────────────────────────────
+  #
+  # Full feature *foundation* on the system side.
+  # Behavior/autostart will be handled later by Home Manager.
 
   environment.systemPackages = with pkgs; [
-    # Terminal / launcher / lock / wallpaper / clipboard / screenshots / notifications
+    # Core Wayland workflow
     alacritty
     fuzzel
     swaylock
@@ -89,23 +68,21 @@
     wl-clipboard
     grim
     slurp
+
+    # Notifications + idle (packages only; HM will manage services)
     mako
-    
-    # XWayland helper strongly recommended by upstream Niri docs
+    swayidle
+
+    # Niri-recommended helper
     xwayland-satellite
 
-    # Portals & secrets
+    # Portals / keyring UX
     xdg-desktop-portal-gtk
     xdg-desktop-portal-gnome
     gnome-keyring
-
-    # Polkit agent (you’ll autostart per-user via Niri or user systemd)
     polkit_gnome
 
-    # Optional:
-    #   nautilus is what xdg-desktop-portal-gnome prefers as file chooser.
-    #   Comment this out if you really don’t want it and instead ship
-    #   a custom niri-portals.conf pointing file chooser at GTK instead.
+    # Optional: GNOME file chooser that xdg-desktop-portal-gnome prefers
     nautilus
   ];
 
@@ -113,7 +90,7 @@
   #  Wayland / Electron quirks
   # ─────────────────────────────────────────
   #
-  # Helps Electron/Chromium stuff behave on Wayland (Slack, VS Code, etc.).
+  # Helps Chromium/Electron apps prefer Wayland.
 
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 }
