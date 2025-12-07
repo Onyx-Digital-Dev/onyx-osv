@@ -103,17 +103,6 @@
 
   programs.xwayland.enable = true;
 
-  # --- Virtualisation ---------------------------------------------------------
-
-  # --- Ollama -----------------------------------------------------------------
-  services.ollama = {
-    enable = true;
-    acceleration = "cuda";
-    loadModels = [
-      "codellama:13b"
-      "codegemma:7b"
-    ];
-  };
 
   # --- Applications / programs ------------------------------------------------
   programs.firefox.enable = true;
