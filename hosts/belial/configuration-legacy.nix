@@ -29,9 +29,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # --- Networking -------------------------------------------------------------
-  networking.networkmanager.enable = true;
-
   # --- Display stack: SDDM + Plasma + Niri -----------------------------------
   services.xserver.enable = true;
 
@@ -192,14 +189,6 @@
     xmrig
 
   ];
-
-  # --- SSH / firewall ---------------------------------------------------------
-  services.openssh.enable = true;
-
-  networking.firewall = {
-    enable = true;
-    allowedTCPPorts = [ 22 5900 5901 5902 5903 ];
-  };
 
   # --- NixOS version ----------------------------------------------------------
   system.stateVersion = "25.05";

@@ -18,6 +18,8 @@
      ../../modules/virtualisation.nix
      ../../modules/ollama.nix
      ../../modules/audio-pipewire.nix
+     ../../modules/networking.nix
+     ../../modules/security.nix
           
     # ---- GPU selection (for ISO users to uncomment ONE) ----
     # ../../modules/gpu/amd.nix
@@ -25,4 +27,19 @@
      ../../modules/gpu/nvidia.nix
     # ../../modules/gpu/nvidia-prime.nix
   ];
+
+    # ---- Belial-specific networking / security overrides ----
+
+    # SSH: enabled on this host (disabled by default in OSV).
+    services.openssh.enable = true;
+
+    # Open SSH + VNC ports for this host.
+    networking.firewall.allowedTCPPorts = [
+      22
+      5900
+      5901
+      5902
+      5903
+    ];
+
 }
