@@ -17,7 +17,7 @@
      ../../modules/mpd.nix
      ../../modules/virtualisation.nix
      ../../modules/ollama.nix
-
+     ../../modules/audio-pipewire.nix
           
     # ---- GPU selection (for ISO users to uncomment ONE) ----
     # ../../modules/gpu/amd.nix
