@@ -22,7 +22,7 @@
     # ---- GPU selection (for ISO users to uncomment ONE) ----
     # ../../modules/gpu/amd.nix
     # ../../modules/gpu/intel.nix
-    # ../../modules/gpu/nvidia.nix
+     ../../modules/gpu/nvidia.nix
     # ../../modules/gpu/nvidia-prime.nix
   ];
 }
